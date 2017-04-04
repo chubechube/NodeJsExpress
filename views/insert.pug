@@ -1,0 +1,26 @@
+
+html(lang='en')
+	head
+		title Express authentication example : insert of an user
+	body
+
+	h1 You have Visited This Page 
+	h1=message	
+	
+	h1 Sign-in to this Express authentication example
+		p Use <i>user</i> for the username and <i>pass</i> for the password.
+
+		form(method='post')
+			p
+				label(for='userName') Username
+				input(type='text', name='userName')
+			p
+				label(for='userEmail') UserEmail
+				input(type='text', name='userEmail')
+			p
+				label(for='userPassword') Password
+				input(type='password', name='userPassword')
+			input(type='submit')
+
+-if(messages)
+		div#note #{messages.info}
