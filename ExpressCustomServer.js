@@ -60,7 +60,7 @@ class ExpressCustomServer {
 
                 //starting the server
                 app.listen(3030);
-                console.log("Server is running");
+                console.log("Server is running at 3030");
                 
 }
 

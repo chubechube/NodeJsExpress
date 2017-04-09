@@ -20,7 +20,8 @@ initializeSpell(){
 			name 		        : String,
             sor      	        : Number,
             wiz      	        : Number,
-            cleric       	    : Number
+            cleric       	    : Number,
+            description         : String
 			
 		}, { id: true });
 
@@ -47,7 +48,9 @@ findSpellByClassAndLevel(userClass ,spellLevel){
 		    return this.spellModel.find({sor : spellLevel}).exec();
         break;
 
-
+        
+        default:
+            return null;
 
         }
 	}

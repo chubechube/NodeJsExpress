@@ -179,9 +179,9 @@ self.router.all("*", function (req, res, next) {
   });
 
 //List of Spells Page GET
-	self.router.get('/spells',function(req,res){
+	self.router.get('/spells/:class_id',function(req,res){
 		
-		var promisedSpellsList = self.dbConnection.spellHandler.findSpellByClassAndLevel("sor","9");
+		var promisedSpellsList = self.dbConnection.spellHandler.findSpellByClassAndLevel(req.params.class_id,"9");
 
 
 		function showSpells(allSpells){
@@ -190,7 +190,7 @@ self.router.all("*", function (req, res, next) {
 			res.json(allSpells);
 		};
 
-
+		if(promisedSpellsList != null){
 		promisedSpellsList.then(function(allSpells){
 
 				showSpells(allSpells);
@@ -198,7 +198,10 @@ self.router.all("*", function (req, res, next) {
 		}).catch(function(err){
 		console.log(err)});
 
+		}else{
+			res.send("Spell not Found");
 
+		};
 
 	});
 
