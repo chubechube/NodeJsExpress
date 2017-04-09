@@ -1,0 +1,11 @@
+html
+  head
+    title= 'User Managment'
+  body
+    a(href="/") Home 
+    
+  each user in users
+    p.User
+      li= user
+          a(href = '/users/'+user.id ) #{user.userName}
+    
