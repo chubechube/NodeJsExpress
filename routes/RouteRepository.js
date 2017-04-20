@@ -179,14 +179,22 @@ self.router.all("*", function (req, res, next) {
   });
 
 //List of Spells Page GET
-	self.router.get('/spells/:class_id',function(req,res){
+
+
+
+
+
+	self.router.get('/spells',function(req,res){
+		var userClass = req.query.class;
+		var userLevel = req.query.level;
+
 		
-		var promisedSpellsList = self.dbConnection.spellHandler.findSpellByClassAndLevel(req.params.class_id,"9");
+		console.log("LIVELLO "+userLevel);		
+		var promisedSpellsList = self.dbConnection.spellHandler.findSpellByClassAndLevel(userClass,userLevel);
 
 
 		function showSpells(allSpells){
 			console.log(allSpells);
-			//res.render('userManagement',{users: allUsers});
 			res.json(allSpells);
 		};
 

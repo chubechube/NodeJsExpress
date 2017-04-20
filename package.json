@@ -2,9 +2,9 @@
   "name": "NodeJsExpress",
   "version": "0.0.1",
   "private": true,
-  "main": "app.js",
+  "main": "Starter.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node Starter.js",
     "test": "./node_modules/.bin/mocha --reporter spec"
   },
   "dependencies": {

@@ -42,8 +42,9 @@ const session               = require('express-session');
 
 
 //Redis Server Creation 
-    var redisHandler = new RedisHandler(spider,"192.168.178.22","chube2017");
+    //var redisHandler = new RedisHandler(spider,"192.168.178.22","chube2017");
     //var redisHandler = new RedisHandler(spider,"192.168.1.7","chube2017");
+    var redisHandler = new RedisHandler(spider,"127.0.0.1","chube2017");
     spider.addModule('redisHandler',redisHandler);
 
 //Redis Client Connection
