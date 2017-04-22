@@ -1,13 +1,21 @@
 var chai 					= require('chai');
 var should					= chai.should()
 var expect					= chai.expect;
+var DataBaseHandler 	    = require("../db/DataBaseHandler");
 var PathfinderUserHandler 	= require("../db/PahtfinderUserHandler");
 var MessageDispatcher	    = require('../messageDispatcher');
-const Spider                = require('../Spider');
+var Spider                	= require('../Spider');
 
-var spider              = new Spider();
-var messageDispatcher   = new MessageDispatcher();
-var dbconnection 		= new PathfinderUserHandler(spider);
+var spider              		= new Spider();
+var messageDispatcher  		 	= new MessageDispatcher();
+var dbconnection 				= new DataBaseHandler(spider);
+spider.addModule("dbHandler",dbconnection);
+
+
+var pathfinderUserHandler	= new PathfinderUserHandler(spider);
+        spider.addModule('pathfinderUserHandler',pathfinderUserHandler);
+
+
 
 
 var isConnected = false;
@@ -42,7 +50,7 @@ describe("Connection to the Database", function(){
 
 		it("creata an User ",function(done){
 			
-			var userNew = dbconnection.createUser("chube","test@gmail.com","test","cleric",1,"Bahantar");
+			var userNew = pathfinderUserHandler.createUser("chube","test@gmail.com","test","cleric",1,"Bahantar");
 			userNew.catch(function(err){console.log("%s",err)}).then(function(promisedUser){
 				should.exist(promisedUser);
 				done();
@@ -52,7 +60,7 @@ describe("Connection to the Database", function(){
 
 		 it("Find an User using name as key",function(done){
 			
-			var promisedUser = dbconnection.findUserByName("chube");
+			var promisedUser = pathfinderUserHandler.findUserByName("chube");
 			promisedUser.catch(function(err){console.log(err)}).then(function(promisedUser){
 				expect(promisedUser).to.be.an('array');
 				expect(promisedUser[0]).to.have.a.property('userName').that.is.a('string');
@@ -64,7 +72,7 @@ describe("Connection to the Database", function(){
 
 		  it("Find an User using mail as key",function(done){
 			
-			var promisedUser = dbconnection.findUserByEmail("test@gmail.com");
+			var promisedUser = pathfinderUserHandler.findUserByEmail("test@gmail.com");
 			promisedUser.catch(function(err){console.log(err)}).then(function(promisedUser){
 				expect(promisedUser).to.be.an('array');
 				expect(promisedUser[0]).to.have.a.property('userName').that.is.a('string');
@@ -79,7 +87,7 @@ describe("Connection to the Database", function(){
 		 it("retrieve all users",function(done){
 
 			
-			var allUsers = dbconnection.getAllUser();
+			var allUsers = pathfinderUserHandler.getAllUser();
 
 			allUsers.catch(function(err){console.log(err)}).then(function(allUsers){
 				//console.log("Oggetto cancellato "+deletedItem);

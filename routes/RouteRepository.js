@@ -178,6 +178,35 @@ self.router.all("*", function (req, res, next) {
     res.redirect(goUrl);
   });
 
+// List of all Pathdinfer Users GET
+
+	self.router.get('/pahtfinderUsers',function(req,res){
+	
+
+		
+		
+		var promisedPathfinderUserList = self.pathfinderUserHandler.getAllUser();
+
+
+		
+		if(promisedPathfinderUserList != null){
+		promisedPathfinderUserList.then(function(allUsers){
+			res.json(allUsers);
+		}).catch(function(err){
+		console.log(err)});
+
+		}else{
+			res.send("Pathdinder Users not Found");
+
+		};
+
+	});
+
+
+
+
+
+
 //List of Spells Page GET
 
 
@@ -189,7 +218,6 @@ self.router.all("*", function (req, res, next) {
 		var userLevel = req.query.level;
 
 		
-		console.log("LIVELLO "+userLevel);		
 		var promisedSpellsList = self.dbConnection.spellHandler.findSpellByClassAndLevel(userClass,userLevel);
 
 
@@ -221,12 +249,14 @@ self.router.all("*", function (req, res, next) {
 class RouteRepository{
 constructor(spider) {
 
-		this.spider				= spider;
-		var app 				= this.spider.getFunction('app');
-		this.express			= this.spider.getFunction('express');
-		this.parseurl 			= parseurl;
-		this.dbConnection		= this.spider.getModule('dbHandler');
-		this.passportHandler	= new PassportHandler(this.dbConnection);
+		this.spider					= spider;
+		var app 					= this.spider.getFunction('app');
+		this.express				= this.spider.getFunction('express');
+		this.parseurl 				= parseurl;
+		this.dbConnection			= this.spider.getModule('dbHandler');
+		this.pathfinderUserHandler  = this.spider.getModule('pathfinderUserHandler');
+		this.passportHandler		= new PassportHandler(this.dbConnection);
+		
 		//Passport configuration
 			//Passoport for authentication
 		app.use(this.passportHandler.passport.initialize());

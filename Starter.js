@@ -1,8 +1,9 @@
 const Spider                = require('./Spider');
 const RedisHandler          = require('./db/RedisHandler');
 const ExpressCustomServer   = require('./ExpressCustomServer') ;
-const DataBaseHandler       = require("./db/DataBaseHandler");
+const DataBaseHandler       = require('./db/DataBaseHandler');
 const session               = require('express-session');
+const PathfinderUserHandler = require('./db/PahtfinderUserHandler');
 
 
 
@@ -30,6 +31,12 @@ const session               = require('express-session');
 
     spider.on(spider.availableMessages.DBHANDLER_CONNECTION_OK,function(){
         console.log("Mongo DB OK")
+
+        //Adding Document Stubs
+        var pathfinderUserHandler	= new PathfinderUserHandler(spider);
+        spider.addModule('pathfinderUserHandler',pathfinderUserHandler);
+
+
         if(!spider.getModule('expressCustomServer')){ 
         var expressCustomServer = new ExpressCustomServer(spider);
         spider.addModule('expressCustomServer',expressCustomServer);

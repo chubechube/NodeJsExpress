@@ -2,7 +2,7 @@
 const  mongoose 		= require('mongoose');
 const  bcrypt			= require('bcrypt-nodejs');
 
-const  SpelllHandler = require('./SpellsHandler')
+
 
 mongoose.Promise = global.Promise;
 
@@ -15,45 +15,13 @@ class PathfinderUserHandler  {
 		this.spider 			= spider;
 		this.self				= this;
 		this.Schema 			= mongoose.Schema;
-		this.spellHandler		= new SpelllHandler(mongoose);	
+		this.spellHandler		= this.spider.getModule('dbHandler').spellHandler;	
 	
 		
 		this.initializeUser();
 	}
 
 	
-
-	isConnected() {
-		return this.connected;
-	}
-
-	connectDB() {
-			var self 	= this;
-			var uri		= 'mongodb://devchube:dev2017!@ds147789.mlab.com:47789/mongo460';
-			var options = {promiseLibrary : global.Promise };
-			//this.db.connect('mongodb://localhost/test')
-			this.db.connect(uri,options);
-			this.db.connection.once('connected', function() {
-				self.connected = true
-				self.spider.emit(self.spider.availableMessages.DBHANDLER_CONNECTION_OK);
-			});
-			
-			this.db.connection.once('error', function(){
-			this.connected = false;
-			self.spider.emit(self.spider.availableMessages.DBHANDLER_CONNECTION_FAILED);
-			});
-			
-		}
-	
-	disconnectDB(){
-		var self = this;
-		this.db.disconnect();
-		this.db.connection.once('disconnected', function() {
-				
-			self.connected = false
-			self.spider.emit(self.spider.availableMessages.DBHANDLER_DB_DISCONNECTED,"","");
-			});
-	}
 
 	
 	//User utilities
@@ -92,7 +60,7 @@ class PathfinderUserHandler  {
 				return bcrypt.compareSync(password, this.userPassword);
 			};
 
-			this.userModel = mongoose.model("users",this.userSchema);
+			this.userModel = mongoose.model("pathfinderusers",this.userSchema);
 
 
 	};
