@@ -27,7 +27,6 @@ initializeSpell(){
             magus       	    : Number,
             antipaladin       	: Number,
             inquisitor     	    : Number,
-            alchemist       	: Number,
             summoner       	    : Number,
             paladin      	    : Number,
             alchemist       	: Number,
