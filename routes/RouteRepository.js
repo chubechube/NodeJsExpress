@@ -181,27 +181,34 @@ self.router.all("*", function (req, res, next) {
 // List of all Pathdinfer Users GET
 
 	self.router.get('/pahtfinderUsers',function(req,res){
-	
-
+		
+		var userID = req.query.user_id;
+		var promisedPathfinderUserList = null;
+		
+		if(userID == null) {
 		
 		
-		var promisedPathfinderUserList = self.pathfinderUserHandler.getAllUser();
-
-
+			promisedPathfinderUserList = self.pathfinderUserHandler.getAllUser();	
 		
+
+		} else{
+			promisedPathfinderUserList = self.pathfinderUserHandler.findUserById(userID);	
+		}
+
+
+
 		if(promisedPathfinderUserList != null){
-		promisedPathfinderUserList.then(function(allUsers){
-			res.json(allUsers);
-		}).catch(function(err){
-		console.log(err)});
+				promisedPathfinderUserList.then(function(allUsers){
+					res.json(allUsers);
+				}).catch(function(err){
+				console.log(err)});
 
-		}else{
-			res.send("Pathdinder Users not Found");
+			}else{
+					console.log("nessun utente trovato")
+					res.json("Pathdinder Users not Found");
 
 		};
-
 	});
-
 
 
 

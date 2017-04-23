@@ -50,7 +50,7 @@ describe("Connection to the Database", function(){
 
 		it("creata an User ",function(done){
 			
-			var userNew = pathfinderUserHandler.createUser("chube","test@gmail.com","test","cleric",1,"Bahantar");
+			var userNew = pathfinderUserHandler.createUser("Masson","@gmail.com","test","Khan Nokan",1,"bloodrager");
 			userNew.catch(function(err){console.log("%s",err)}).then(function(promisedUser){
 				should.exist(promisedUser);
 				done();
