@@ -141,12 +141,16 @@ findSpellByClassAndLevel(userClass ,spellLevel){
 		    return this.spellModel.find({skald : spellLevel}).exec();
         break;
 
-        case "investigato":
+        case "investigator":
 		    return this.spellModel.find({investigator : spellLevel}).exec();
         break;
 
         case "hunter":
 		    return this.spellModel.find({hunter : spellLevel}).exec();
+        break;
+
+         case "bloodrager":
+		    return this.spellModel.find({bloodrager : spellLevel}).exec();
         break;
            
         
